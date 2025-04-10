@@ -8,10 +8,14 @@
                     <MyImg :imgSrc="product.imageUrl"/>
                 </div>
             </div>
-            <div class="h-[100px] flex flex-col">
-                <div class="font-semibold">{{ setTextEllipsis(product.name, 40) }}</div>
+            <div class="flex flex-col">
+                <div class="font-bold h-[50px]">{{ setTextEllipsis(product.name, 26) }}</div>
                 <div class="space-x-2">
-                    <span class="font-semibold">$ {{ product.price }}</span>
+                    <span class="font-bold">狀態: </span>
+                    <span class="font-semibold text-gray-500"> {{ product.status }}</span>
+                </div>
+                <div class="space-x-2">
+                    <span class="font-semibold text-[1.25em]">$ {{ product.price }}</span>
                 </div>
             </div>
             <MyButton
