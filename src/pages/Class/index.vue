@@ -4,7 +4,8 @@
             relative grid grid-cols-1 justify-items-center gap-3 gap-y-[3em] py-[2em]
         "
         :class="{
-            'sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4': !isFetching
+            'sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4': !isFetching,
+            'min-h-[calc(100vh-50px)]': isFetching
         }"
     >
         <MyLoading :isFetching="isFetching">
@@ -12,6 +13,8 @@
                 v-for="product in classesList"
                 :key="product.id"
                 :product="product"
+                :cartNow="cartNow"
+                @updateCart="() => { emits('updateCart') }"
             />
         </MyLoading>
     </div>
@@ -26,6 +29,13 @@ import ProductCard from './components/ProductCard.vue'
 defineOptions({
     name: "ClassPage"
 })
+const props = defineProps({
+    cartNow: {
+        type: Object,
+        default: []
+    }
+})
+const emits = defineEmits(['updateCart'])
 const { request_GET } = useHttpRequestStore()
 const classesList = ref([])
 const isFetching = ref(false)
@@ -35,7 +45,7 @@ const fetchData = async () => {
         const result = await request_GET({
             url: "macros/s/AKfycbyGmoZukCQze0nw3UF-VX9ELODVy5Rs6CIQ1U-YbwNHfG3JIjGz4JThKAvWJB1P0qTg/exec"
         })
-        console.log(result);
+        // console.log(result);
         classesList.value = result
     } catch (err) {
         console.error(err)
@@ -44,6 +54,6 @@ const fetchData = async () => {
     }
 }
 onMounted(() => {
-    fetchData()
+    fetchData();
 })
 </script>

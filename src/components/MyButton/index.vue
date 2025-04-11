@@ -4,7 +4,7 @@
         'flex items-center justify-center rounded-md font-semibold cursor-pointer focus:outline-none transition duration-300 ease-in-out',
         buttonSizeClass,
         buttonColorClass,
-        { 'opacity-50 cursor-not-allowed!': isLoading }
+        { 'opacity-50 cursor-not-allowed!': isLoading || isNotAllowed }
       ]"
       :disabled="isLoading"
       @click="handleClick"
@@ -45,11 +45,16 @@
             type: Boolean,
             default: false,
         },
+        isNotAllowed: {
+            type: Boolean,
+            default: false,
+        }
     });
   
     const emit = defineEmits(['click']);
     
     const handleClick = () => {
+        if (props.isLoading || props.isNotAllowed) return
         emit('click');
     };
   

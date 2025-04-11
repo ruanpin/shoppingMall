@@ -5,7 +5,7 @@ import { deepParseJson } from 'deep-parse-json';
 export const useHttpRequestStore = defineStore('httpRequest', () => {
   function request_GET({ url, data }) {
     return new Promise((resolve, reject) => {
-      console.log('request_GET', url, data);
+      // console.log('request_GET', url, data);
       request
         .request()
         .get(url, {

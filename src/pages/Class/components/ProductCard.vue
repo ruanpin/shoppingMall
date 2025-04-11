@@ -21,6 +21,8 @@
             <MyButton
                 label="加入購物車"
                 :isLoading="false"
+                :isNotAllowed="product.status === '尚未開始' || product.status === '已結束'"
+                @click="handleClick"
             ></MyButton>
         </div>
     </div>
@@ -31,6 +33,7 @@
 import MyImg from '@/components/MyImg/index.vue'
 import MyButton from '@/components/MyButton/index.vue'
 import { setTextEllipsis } from '@/utils/textUtils.js'
+import { updateCart } from '@/services/cartService.js'
 
 defineOptions({
     name: "ProductCardComponent"
@@ -39,6 +42,22 @@ const props = defineProps({
     product: {
         type: Object,
         default: {}
+    },
+    cartNow: {
+        type: Object,
+        default: []
     }
 })
+const emits = defineEmits(['updateCart'])
+function handleClick () {
+    const target = {
+        id: props.product.id,
+        imageUrl: props.product.imageUrl,
+        name: props.product.name,
+        price: props.product.price,
+        quantity: 1
+    }
+    updateCart(props.cartNow, target)
+    emits('updateCart')
+}
 </script>

@@ -11,14 +11,21 @@
                     'bg-gray-100': route.path === tab.path
                 }"
                 @click="pushTo(tab.path)"
-            >{{ tab.name }}</div>
+            >{{ tab.name }}</div>{{ cartTotalQuantity }}
         </div>
-        <RouterView />
+        <RouterView
+            :cartNow="cartNow"
+            @updateCart="handleUpdateCart"
+        />
     </div>
 </template>
 
 <script setup>
+import { onMounted, ref, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
+import {
+  getCartData,
+} from '@/services/cartService.js'
 const tabs = [
     { name: "課程", path: "/" },
     { name: "購物車", path: "/cart" },
@@ -28,7 +35,21 @@ defineOptions({
 })
 const router = useRouter()
 const route = useRoute()
+const cartNow = ref([])
+const cartTotalQuantity = computed(() => (
+    cartNow.value.reduce((sum, item) => sum + item.quantity, 0)
+))
 function pushTo (path) {
     router.push(path)
 }
+async function handleUpdateCart () {
+    cartNow.value = await getCartData()
+}
+onMounted(async () => {
+    try {
+        await handleUpdateCart()
+    } catch (err) {
+        console.error('載入購物車發生錯誤：', err)
+    }
+})
 </script>
