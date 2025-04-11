@@ -33,7 +33,7 @@
 import MyImg from '@/components/MyImg/index.vue'
 import MyButton from '@/components/MyButton/index.vue'
 import { setTextEllipsis } from '@/utils/textUtils.js'
-import { updateCart } from '@/services/cartService.js'
+import { addProductToCart } from '@/services/cartService.js'
 
 defineOptions({
     name: "ProductCardComponent"
@@ -57,7 +57,7 @@ function handleClick () {
         price: props.product.price,
         quantity: 1
     }
-    updateCart(props.cartNow, target)
+    addProductToCart(props.cartNow, target)
     emits('updateCart')
 }
 </script>

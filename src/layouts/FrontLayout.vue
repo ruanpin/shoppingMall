@@ -16,6 +16,7 @@
         <RouterView
             :cartNow="cartNow"
             @updateCart="handleUpdateCart"
+            @updateQuantity="handleUpdateQuantity"
         />
     </div>
 </template>
@@ -25,6 +26,7 @@ import { onMounted, ref, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import {
   getCartData,
+  updateQuantityInCart,
 } from '@/services/cartService.js'
 const tabs = [
     { name: "課程", path: "/" },
@@ -52,4 +54,12 @@ onMounted(async () => {
         console.error('載入購物車發生錯誤：', err)
     }
 })
+async function handleUpdateQuantity({ quantity, id }) {
+    try {
+        await updateQuantityInCart(cartNow.value, id, quantity)
+        await handleUpdateCart()
+    } catch (err) {
+        console.error('更新商品數量發生錯誤：', err)
+    }
+}
 </script>

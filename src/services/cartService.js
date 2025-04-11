@@ -6,7 +6,7 @@ export async function getCartData() {
   return await LocalStorageHelper.get(CART_KEY)
 }
 
-export async function updateCart(cartData, product) {
+export async function addProductToCart(cartData, product) {
   const data = [...cartData]
   const index = data.findIndex(item => item.id === product.id)
 
@@ -24,6 +24,22 @@ export async function updateCart(cartData, product) {
   await LocalStorageHelper.set(CART_KEY, data)
   return data
 }
+
+export async function updateQuantityInCart(cartData, id, quantity) {
+  const data = [...cartData]
+  const index = data.findIndex(item => item.id === id)
+
+  if (index !== -1) {
+    data[index].quantity = quantity
+    if (data[index].quantity <= 0) {
+      data.splice(index, 1)
+    }
+  }
+
+  await LocalStorageHelper.set(CART_KEY, data)
+  return data
+}
+
 
 export async function clearCart() {
   await LocalStorageHelper.remove(CART_KEY)
