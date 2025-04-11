@@ -47,6 +47,7 @@ import {
   updateQuantityInCart,
   deleteProducts
 } from '@/services/cartService.js'
+import { notification } from '@/assets/notification.js'
 const tabs = [
     { name: "課程", path: "/" },
     { name: "購物車", path: "/cart" },
@@ -83,8 +84,10 @@ async function handleUpdateQuantity({ quantity, id }) {
 }
 async function handleDeleteProducts({ checkedItems }) {
     try {
+        if (!checkedItems.length) return notification.warning("刪除失敗，請先勾選商品")
         await deleteProducts(cartNow.value, checkedItems)
         await handleUpdateCart()
+        notification.success("刪除成功")
     } catch (err) {
         console.error('刪除商品發生錯誤：', err)
     }

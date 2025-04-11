@@ -34,6 +34,7 @@ import MyImg from '@/components/MyImg/index.vue'
 import MyButton from '@/components/MyButton/index.vue'
 import { setTextEllipsis } from '@/utils/textUtils.js'
 import { addProductToCart } from '@/services/cartService.js'
+import { notification } from '@/assets/notification.js'
 
 defineOptions({
     name: "ProductCardComponent"
@@ -59,5 +60,6 @@ function handleClick () {
     }
     addProductToCart(props.cartNow, target)
     emits('updateCart')
+    notification.success("新增成功")
 }
 </script>
