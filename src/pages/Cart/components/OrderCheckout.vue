@@ -1,6 +1,6 @@
 <template>
-    <div class="m-[1.5em] flex flex-col justify-center lg:col-span-1 min-w-[300px] px-[1em]">
-      <div class="flex flex-col gap-y-3 bg-[#F7F7F7] rounded-[18px] p-[1.3em] md:p-[2em] pt-[1.3em] font-semibold">
+    <div class="m-[1.5em] flex flex-col items-center lg:col-span-1 min-w-[300px] px-[1em] py-[1.3em] w-full">
+      <div class=" w-full flex flex-col gap-y-3 bg-[#F7F7F7] rounded-[18px] p-[1.3em] md:p-[2em] pt-[1.3em] font-semibold">
         <div class="text-[1.8em] mb-[1.2em]">訂單總覽</div>
   
         <div class="flex justify-between items-center">

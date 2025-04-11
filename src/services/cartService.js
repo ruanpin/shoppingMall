@@ -40,6 +40,13 @@ export async function updateQuantityInCart(cartData, id, quantity) {
   return data
 }
 
+export async function deleteProducts(cartData, checkedItems) {
+  const data = [...cartData]
+  const result = data.filter(product => !checkedItems.includes(product.id))
+
+  await LocalStorageHelper.set(CART_KEY, result)
+  return data
+}
 
 export async function clearCart() {
   await LocalStorageHelper.remove(CART_KEY)

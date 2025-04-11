@@ -6,6 +6,10 @@
             @allCheck="handleAllCheck"
             @updateCheckedItems="handleUpdateCheckedItems"
             @updateQuantity="({ quantity, id }) => { emits('updateQuantity', { quantity, id }) }"
+            @deleteProducts="() => {
+                emits('deleteProducts', { checkedItems: JSON.parse(JSON.stringify(checkedItems)) });
+                checkedItems = []
+            }"
         />
         <OrderCheckout
             :cartNow="cartNow"
@@ -28,7 +32,7 @@ const props = defineProps({
         default: []
     }
 })
-const emits = defineEmits(['updateCart', 'updateQuantity'])
+const emits = defineEmits(['updateCart', 'updateQuantity', 'deleteProducts'])
 const checkedItems = ref([])
 function handleAllCheck({ allCheck }) {
     if (allCheck) {

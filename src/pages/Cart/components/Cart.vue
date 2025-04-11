@@ -1,7 +1,7 @@
 <template>
     <div class="mx-[1.5em] flex flex-col gap-8 lg:col-span-2 py-[1.3em] px-[1em]">
         <div v-if="cartNow.length">
-            <div class="flex">
+            <div class="flex items-center">
                 <label class="inline-flex items-center cursor-pointer">
                     <input
                         type="checkbox"
@@ -11,9 +11,17 @@
                     />
                     <div class="px-[1.5em] font-bold text-[1.1em]">全選</div>
                 </label>
+                <div
+                    class="text-[#DB1214] cursor-pointer font-bold text-[1.1em]"
+                    @click="() => { emits('deleteProducts') }"
+                >刪除</div>
             </div>
         </div>
-        <div v-else class="text-center my-[3em] font-semibold text-[1.5em]">
+        <div
+            v-else
+            class="text-center my-[3em] font-semibold text-[1.5em]"
+            :class="{'pt-[4em]': !cartNow.length}"
+        >
             購物車中沒有商品
         </div>
         <div
@@ -54,7 +62,7 @@ const props = defineProps({
         default: []
     }
 })
-const emits = defineEmits(['allCheck', 'updateCheckedItems', 'updateQuantity'])
+const emits = defineEmits(['allCheck', 'updateCheckedItems', 'updateQuantity', 'deleteProducts'])
 const cartNowCheckedAmount = computed(() => {
     return props.cartNow.length
 })

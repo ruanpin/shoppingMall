@@ -11,13 +11,28 @@
                     'bg-gray-100': route.path === tab.path
                 }"
                 @click="pushTo(tab.path)"
-            >{{ tab.name }}</div>{{ cartTotalQuantity }}
+            >{{ tab.name }}</div>
+            <div
+                class="
+                    bg-[#DB1214] rounded-[999px] w-[20px] h-[20px] text-[10px]
+                    font-bold text-white flex justify-center items-center
+                    relative -translate-x-5
+                "
+                :class="{
+                    'opacity-0': cartTotalQuantity <= 0
+                }"
+            >
+                <div>{{ cartTotalQuantity }}</div>
+            </div>
         </div>
-        <RouterView
-            :cartNow="cartNow"
-            @updateCart="handleUpdateCart"
-            @updateQuantity="handleUpdateQuantity"
-        />
+        <keep-alive>
+            <RouterView
+                :cartNow="cartNow"
+                @updateCart="handleUpdateCart"
+                @updateQuantity="handleUpdateQuantity"
+                @deleteProducts="handleDeleteProducts"
+            />
+        </keep-alive>
     </div>
 </template>
 
@@ -27,6 +42,7 @@ import { useRouter, useRoute } from 'vue-router'
 import {
   getCartData,
   updateQuantityInCart,
+  deleteProducts
 } from '@/services/cartService.js'
 const tabs = [
     { name: "課程", path: "/" },
@@ -60,6 +76,14 @@ async function handleUpdateQuantity({ quantity, id }) {
         await handleUpdateCart()
     } catch (err) {
         console.error('更新商品數量發生錯誤：', err)
+    }
+}
+async function handleDeleteProducts({ checkedItems }) {
+    try {
+        await deleteProducts(cartNow.value, checkedItems)
+        await handleUpdateCart()
+    } catch (err) {
+        console.error('刪除商品發生錯誤：', err)
     }
 }
 </script>
