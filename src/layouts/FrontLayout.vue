@@ -25,14 +25,17 @@
                 <div>{{ cartTotalQuantity }}</div>
             </div>
         </div>
-        <keep-alive>
-            <RouterView
-                :cartNow="cartNow"
-                @updateCart="handleUpdateCart"
-                @updateQuantity="handleUpdateQuantity"
-                @deleteProducts="handleDeleteProducts"
-            />
-        </keep-alive>
+        <router-view v-slot="{ Component }">
+            <keep-alive>
+                <component
+                    :is="Component"
+                    :cartNow="cartNow"
+                    @updateCart="handleUpdateCart"
+                    @updateQuantity="handleUpdateQuantity"
+                    @deleteProducts="handleDeleteProducts"
+                />
+            </keep-alive>
+        </router-view>
     </div>
 </template>
 
